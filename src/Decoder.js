@@ -1,5 +1,5 @@
-function Result() {
-  this.codes = {
+function Decoder() {
+  this.initials = {
     'C': 'Conservative Party',
     'L': 'Labour Party',
     'UKIP': 'UKIP',
@@ -10,4 +10,4 @@ function Result() {
   }
 }
 
-module.exports = Result
+module.exports = Decoder
