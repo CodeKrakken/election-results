@@ -8,7 +8,6 @@ function Processor() {
     'Ind': 'Independent',
     'SNP': 'SNP'
   }
-  this.processedResult
 }
 
 Processor.prototype.process = function(result) {

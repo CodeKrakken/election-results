@@ -20,18 +20,22 @@ describe('processor', function() {
     expect(processor.process).toBeDefined()
   })
 
-  it('can split a result string', function() {
-    processor.process('Cardiff West, 11014, C, 17803, L, 4923, UKIP, 2069, LD')
-    expect(processor.processedResult).toBeDefined()
+  describe('after decoding', function() {
+    beforeEach(function() {
+      processor.process('Cardiff West, 11014, C, 17803, L, 4923, UKIP, 2069, LD')
+    })
+
+    it('can split a result string', function() {
+      expect(processor.processedResult).toBeDefined()
+    })
+  
+    it('can extract a constituency name from a result string', function() {
+      // processor.process('Cardiff West, 11014, C, 17803, L, 4923, UKIP, 2069, LD')
+      expect(processor.constituency).toEqual('Cardiff West')
+    })
+  
+    // it('can extract a set of party/count pairs from a result string', function() {
+  
+    // })
   })
-
-  it('can extract a constituency name from a result string', function() {
-    processor.process('Cardiff West, 11014, C, 17803, L, 4923, UKIP, 2069, LD')
-    expect(processor.constituency).toEqual('Cardiff West')
-  })
-
-  // it('responds to ', function() {
-  //   expect(decode)
-  // })
-
 })
