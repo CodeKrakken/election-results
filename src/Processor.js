@@ -17,6 +17,7 @@ Processor.prototype.process = function(result) {
   this.processedResult = result.split(', ')
   this.constituency = this.processedResult.shift()
   this.decodedResult = this.decode(this.processedResult)
+  this.percentageResult = this.calculatePercentages(this.decodedResult)
 }
 
 Processor.prototype.decode = function(array) {
@@ -25,11 +26,21 @@ Processor.prototype.decode = function(array) {
     if(Object.keys(decoder.partyInitials).includes(value)) {
       array[index] = decoder.partyInitials[value]
     } else {
-      console.log(value)
-      decoder.totalVotes += +value
+      array[index] = Number(value)
+      decoder.totalVotes += value
     }
   })
   return array
+}
+
+Processor.prototype.calculatePercentages = function(array) {
+  decoder = this
+  array.forEach(function(value, index) {
+    if(typeof value === Number) {
+      console.log('number')
+      array[index] = value / decoder.totalVotes * 100
+    }
+  })
 }
 
 module.exports = Processor
