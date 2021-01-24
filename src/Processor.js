@@ -1,3 +1,5 @@
+const { ConsoleReporter } = require("jasmine")
+
 function Processor() {
   this.partyInitials = {
     'C': 'Conservative Party',
@@ -11,13 +13,19 @@ function Processor() {
 }
 
 Processor.prototype.process = function(result) {
-  this.processedResult = result.split(',')
+  this.processedResult = result.split(', ')
   this.constituency = this.processedResult.shift()
-  this.results = this.collate(this.processedResult)
+  this.decodedResult = this.decode(this.processedResult)
 }
 
-Processor.prototype.collate = function(array) {
-  return array.reduce((map, obj) => (map[obj.key] = obj.val, map), {});
+Processor.prototype.decode = function(array) {
+  decoder = this
+  array.forEach(function(value, index) {
+    if(Object.keys(decoder.partyInitials).includes(value)) {
+      array[index] = decoder.partyInitials[value]
+    }
+  })
+  return array
 }
 
 module.exports = Processor

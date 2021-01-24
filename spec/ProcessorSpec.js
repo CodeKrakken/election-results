@@ -33,8 +33,8 @@ describe('processor', function() {
       expect(processor.constituency).toEqual('Cardiff West')
     })
   
-    it('can extract a set of party/count pairs from a result string', function() {
-      expect(processor.results).toBeInstanceOf(Object)
+    it('can substitute initials for full party names', function() {
+      expect(processor.decodedResult[1]).toEqual('Conservative Party')
     })
   })
 })
