@@ -9,7 +9,8 @@ function Processor() {
     'G': 'Green Party',
     'Ind': 'Independent',
     'SNP': 'SNP'
-  }
+  },
+  this.totalVotes = 0
 }
 
 Processor.prototype.process = function(result) {
@@ -23,6 +24,9 @@ Processor.prototype.decode = function(array) {
   array.forEach(function(value, index) {
     if(Object.keys(decoder.partyInitials).includes(value)) {
       array[index] = decoder.partyInitials[value]
+    } else {
+      console.log(value)
+      decoder.totalVotes += +value
     }
   })
   return array

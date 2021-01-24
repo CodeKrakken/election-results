@@ -36,5 +36,9 @@ describe('processor', function() {
     it('can substitute initials for full party names', function() {
       expect(processor.decodedResult[1]).toEqual('Conservative Party')
     })
+
+    it('calculates the total votes cast', function() {
+      expect(processor.totalVotes).toEqual(35809)
+    })
   })
 })
