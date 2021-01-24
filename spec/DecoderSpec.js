@@ -16,4 +16,8 @@ describe('decoder', function() {
     expect(Object.keys(decoder.initials).length).toEqual(7)
   })
 
+  it('responds to extract', function() {
+    expect(decoder.extract).toBeDefined()
+  })
+
 })

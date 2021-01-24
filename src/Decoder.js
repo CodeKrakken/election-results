@@ -10,4 +10,8 @@ function Decoder() {
   }
 }
 
+Decoder.prototype.extract = function(rawResult) {
+  
+}
+
 module.exports = Decoder
