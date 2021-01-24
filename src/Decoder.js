@@ -8,10 +8,13 @@ function Decoder() {
     'Ind': 'Independent',
     'SNP': 'SNP'
   }
+  this.splitResult
 }
 
-Decoder.prototype.extract = function(rawResult) {
-  
+Decoder.prototype.extractConstituency = function(rawResult) {
+  this.splitResult = rawResult.split(',')
+  this.constituency = this.splitResult[0]
+  return this.constituency
 }
 
 module.exports = Decoder
