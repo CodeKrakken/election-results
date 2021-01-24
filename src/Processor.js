@@ -13,6 +13,11 @@ function Processor() {
 Processor.prototype.process = function(result) {
   this.processedResult = result.split(',')
   this.constituency = this.processedResult.shift()
+  this.results = this.collate(this.processedResult)
+}
+
+Processor.prototype.collate = function(array) {
+  return array.reduce((map, obj) => (map[obj.key] = obj.val, map), {});
 }
 
 module.exports = Processor
