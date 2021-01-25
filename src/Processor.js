@@ -36,10 +36,8 @@ Processor.prototype.decode = function(array) {
 Processor.prototype.calculatePercentages = function(array) {
   decoder = this
   array.forEach(function(value, index) {
-    if(typeof value === Number) {
+    if(Number.isInteger(value)) {
       array[index] = Number(value / decoder.totalVotes * 100)
-    } else {
-      console.log(typeof value)
     }
   })
   return array
