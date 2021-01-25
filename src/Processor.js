@@ -27,7 +27,7 @@ Processor.prototype.decode = function(array) {
       array[index] = decoder.partyInitials[value]
     } else {
       array[index] = Number(value)
-      decoder.totalVotes += value
+      decoder.totalVotes += Number(value)
     }
   })
   return array
@@ -37,10 +37,12 @@ Processor.prototype.calculatePercentages = function(array) {
   decoder = this
   array.forEach(function(value, index) {
     if(typeof value === Number) {
-      console.log('number')
-      array[index] = value / decoder.totalVotes * 100
+      array[index] = Number(value / decoder.totalVotes * 100)
+    } else {
+      console.log(typeof value)
     }
   })
+  return array
 }
 
 module.exports = Processor
