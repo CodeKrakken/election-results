@@ -21,7 +21,7 @@ describe('processor', function() {
   })
 
   it('presents the results attractively', function() {
-    expect(processor.process('Cardiff West, 11014, C, 17803, L, 4923, UKIP, 2069, LD')).toEqual('Cardiff West\n\nConservative - 31%\nLabour - 50%\nUKIP - 14%\nLiberal Democrats - 6%')
+    expect(processor.process('Cardiff West, 11014, C, 17803, L, 4923, UKIP, 2069, LD')).toEqual('Cardiff West\n\nConservative Party - 31%\nLabour Party - 50%\nUKIP - 14%\nLiberal Democrats - 6%')
   })
 
   describe('after decoding', function() {
