@@ -20,6 +20,10 @@ describe('processor', function() {
     expect(processor.process).toBeDefined()
   })
 
+  it('presents the results attractively', function() {
+    expect(processor.process('Cardiff West, 11014, C, 17803, L, 4923, UKIP, 2069, LD')).toEqual('Cardiff West\n\nConservative - 31%\nLabour - 50%\nUKIP - 14%\nLiberal Democrats - 6%')
+  })
+
   describe('after decoding', function() {
     beforeEach(function() {
       processor.process('Cardiff West, 11014, C, 17803, L, 4923, UKIP, 2069, LD')
@@ -44,5 +48,6 @@ describe('processor', function() {
     it("calculates the percentage of each party's total cast votes", function() {
       expect(processor.percentageResult[0]).toEqual(30.757630763215953)
     })
+
   })
 })

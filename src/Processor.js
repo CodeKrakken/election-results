@@ -40,6 +40,7 @@ Processor.prototype.calculatePercentages = function(array) {
       array[index] = Number(value / decoder.totalVotes * 100)
     }
   })
+  console.log(this.constituency + ': ' + array)
   return array
 }
 
