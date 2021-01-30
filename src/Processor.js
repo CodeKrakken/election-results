@@ -16,6 +16,7 @@ function Processor() {
 Processor.prototype.process = function(result) {
   this.processedResult = result.split(', ')
   this.constituency = this.processedResult.shift()
+  if(!isNaN(this.constituency)) { return 'Invalid constituency.' }
   this.decodedResult = this.decode(this.processedResult)
   this.percentageResult = this.calculatePercentages(this.decodedResult)
   return this.presentResult()

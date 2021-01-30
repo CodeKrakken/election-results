@@ -24,6 +24,10 @@ describe('processor', function() {
     expect(processor.process('Cardiff West, 11014, C, 17803, L, 4923, UKIP, 2069, LD')).toEqual('Cardiff West\n\nConservative Party - 31%\nLabour Party - 50%\nUKIP - 14%\nLiberal Democrats - 6%')
   })
 
+  it('can identify a number in place of a constituency name', function() {
+    expect(processor.process('69, 11014, C, 17803, L, 4923, UKIP, 2069, LD')).toEqual('Invalid constituency.')
+  })
+
   describe('after decoding', function() {
     beforeEach(function() {
       processor.process('Cardiff West, 11014, C, 17803, L, 4923, UKIP, 2069, LD')
