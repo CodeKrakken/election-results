@@ -15,11 +15,18 @@ function Processor() {
 
 Processor.prototype.process = function(result) {
   this.processedResult = result.split(', ')
+  if(this.check(this.processedResult) === false) { return "Invalid result." }
   this.constituency = this.processedResult.shift()
-  if(!isNaN(this.constituency)) { return 'Invalid constituency.' }
   this.decodedResult = this.decode(this.processedResult)
   this.percentageResult = this.calculatePercentages(this.decodedResult)
   return this.presentResult()
+}
+
+Processor.prototype.check = function(result) {
+  for(i=0;i<result.length-2;i+=2) {
+    console.log(isNaN(result[i]) && !isNaN(result[i+1]))
+    return isNaN(result[i]) && !isNaN(result[i+1])
+  }
 }
 
 Processor.prototype.decode = function(array) {
