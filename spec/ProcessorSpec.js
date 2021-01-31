@@ -38,7 +38,7 @@ describe('processor', function() {
   })
 
   it('can identify a missing result', function() {
-    expect(processor.process('Cardiff West, 11014, C, 17803, L, 4923, UKIP, 2069')).toEqual('Invalid result.')
+    expect(processor.process('Cardiff West, 11014, C, 17803, L, 4923, UKIP, 2069')).toEqual('Incomplete result.')
   })
 
   describe('after decoding', function() {
@@ -47,7 +47,7 @@ describe('processor', function() {
     })
 
     it('can split a result string', function() {
-      expect(processor.processedResult).toBeDefined()
+      expect(processor.result).toBeDefined()
     })
   
     it('can extract a constituency name from a result string', function() {

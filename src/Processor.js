@@ -14,19 +14,20 @@ function Processor() {
 }
 
 Processor.prototype.process = function(result) {
-  this.processedResult = result.split(', ')
-  if(this.check(this.processedResult) === false) { return this.response }
-  this.constituency = this.processedResult.shift()
-  this.decodedResult = this.decode(this.processedResult)
+  this.result = result.split(', ')
+  if(this.result.length % 2 === 0) { return "Incomplete result." }
+  if(this.check(this.result) === false) { return this.response }
+  this.constituency = this.result.shift()
+  this.decodedResult = this.decode(this.result)
   this.percentageResult = this.calculatePercentages(this.decodedResult)
   return this.presentResult()
 }
 
 Processor.prototype.check = function(result) {
-  if(result.length % 2 === 0) {
-    this.response = "Invalid result."
-    return false
-  }
+  // if(result.length % 2 === 0) {
+  //   this.response = "Incomplete result."
+  //   return false
+  // }
   if(!isNaN(result[0])) { 
     this.response = "Invalid constituency."
     return false
