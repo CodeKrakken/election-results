@@ -16,6 +16,7 @@ function Processor() {
 Processor.prototype.process = function(result) {
   this.result = result.split(', ')
   if(this.result.length % 2 === 0) { return "Incomplete result." }
+  if(!isNaN(this.result[0])) { return "Invalid constituency." }
   if(this.check(this.result) === false) { return this.response }
   this.constituency = this.result.shift()
   this.decodedResult = this.decode(this.result)
@@ -24,14 +25,6 @@ Processor.prototype.process = function(result) {
 }
 
 Processor.prototype.check = function(result) {
-  // if(result.length % 2 === 0) {
-  //   this.response = "Incomplete result."
-  //   return false
-  // }
-  if(!isNaN(result[0])) { 
-    this.response = "Invalid constituency."
-    return false
-  }
   for(i=1;i<result.length-2;i+=2) {
     if(isNaN(result[i])) {
       this.response = "Invalid count."
