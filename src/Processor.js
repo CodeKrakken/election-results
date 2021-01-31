@@ -20,17 +20,17 @@ Processor.prototype.process = function(result) {
 }
 
 Processor.prototype.inspect = function() {
-  if(this.result.length % 2 === 0) { return this.error("Incomplete result.") }
-  if(!isNaN(this.result[0])) { return this.error("Invalid constituency.") }
+  if(this.result.length % 2 === 0) { return this.error("Incomplete result") }
+  if(!isNaN(this.result[0])) { return this.error(`Invalid constituency - ${this.result[0]}`) }
   for(i=1;i<this.result.length-2;i+=2) {
-    if(isNaN(this.result[i])) { return this.error("Invalid count.") }
-    if(!Object.keys(this.partyInitials).includes(this.result[i+1])) { return this.error("Invalid party.") } 
+    if(isNaN(this.result[i])) { return this.error(`Invalid count - ${this.result[i]}`, ) }
+    if(!Object.keys(this.partyInitials).includes(this.result[i+1])) { return this.error(`Invalid party - ${this.result[i+1]}`) } 
   }
   return this.complete()
 }
 
 Processor.prototype.error = function(message) {
-  fs.appendFile('log.txt', `${message} - ${this.result.join(', ')}\n`, function (err) {
+  fs.appendFile('log.txt', `${this.result.join(', ')} - ${message}\n`, function (err) {
     if (err) return console.log(err);
     console.log(message + ' >> log.txt');
   });

@@ -25,20 +25,20 @@ describe('processor', function() {
   })
 
   it('can identify a number in place of a constituency name', function() {
-    expect(processor.process('69, 11014, C, 17803, L, 4923, UKIP, 2069, LD')).toEqual('Invalid constituency.')
+    expect(processor.process('69, 11014, C, 17803, L, 4923, UKIP, 2069, LD')).toEqual('Invalid constituency - 69')
   })
 
   it('can identify an invalid party abbreviation', function() {
-    expect(processor.process('Cardiff West, 11014, 69, 17803, L, 4923, UKIP, 2069, LD')).toEqual('Invalid party.')
-    expect(processor.process('Cardiff West, 11014, MRLP, 17803, L, 4923, UKIP, 2069, LD')).toEqual('Invalid party.')
+    expect(processor.process('Cardiff West, 11014, 69, 17803, L, 4923, UKIP, 2069, LD')).toEqual('Invalid party - 69')
+    expect(processor.process('Cardiff West, 11014, MRLP, 17803, L, 4923, UKIP, 2069, LD')).toEqual('Invalid party - MRLP')
   })
 
   it('can identify a word in place of a vote count', function() {
-    expect(processor.process('Cardiff West, twattery, C, 17803, L, racism, UKIP, 2069, LD')).toEqual('Invalid count.')
+    expect(processor.process('Cardiff West, 11014, C, 17803, L, racism, UKIP, 2069, LD')).toEqual('Invalid count - racism')
   })
 
   it('can identify a missing result', function() {
-    expect(processor.process('Cardiff West, 11014, C, 17803, L, 4923, UKIP, 2069')).toEqual('Incomplete result.')
+    expect(processor.process('Cardiff West, 11014, C, 17803, L, 4923, UKIP, 2069')).toEqual('Incomplete result')
   })
 
   describe('after decoding', function() {
