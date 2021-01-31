@@ -30,7 +30,7 @@ Processor.prototype.inspect = function() {
 
 Processor.prototype.complete = function() {
   this.constituency = this.result.shift()
-  this.result = this.decode(this.result)
+  this.decode(this.result)
   this.percentageResult = this.calculatePercentages(this.result)
   return this.presentResult()
 }
