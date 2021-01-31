@@ -15,27 +15,20 @@ function Processor() {
 
 Processor.prototype.process = function(result) {
   this.result = result.split(', ')
+  return this.inspect()
+}
+
+Processor.prototype.inspect = function() {
   if(this.result.length % 2 === 0) { return "Incomplete result." }
   if(!isNaN(this.result[0])) { return "Invalid constituency." }
-  if(this.check(this.result) === false) { return this.response }
+  for(i=1;i<this.result.length-2;i+=2) {
+    if(isNaN(this.result[i])) { return "Invalid count." }
+    if(!Object.keys(this.partyInitials).includes(this.result[i+1])) { return "Invalid party." } 
+  }
   this.constituency = this.result.shift()
   this.decodedResult = this.decode(this.result)
   this.percentageResult = this.calculatePercentages(this.decodedResult)
   return this.presentResult()
-}
-
-Processor.prototype.check = function(result) {
-  for(i=1;i<result.length-2;i+=2) {
-    if(isNaN(result[i])) {
-      this.response = "Invalid count."
-      return false
-    } else if(!Object.keys(this.partyInitials).includes(result[i+1])) {
-      this.response = "Invalid party."
-      return false
-    } else {
-      return true
-    }
-  }
 }
 
 Processor.prototype.decode = function(array) {
