@@ -1,4 +1,5 @@
 const { ConsoleReporter } = require("jasmine")
+fs = require('fs')
 
 function Processor() {
   this.partyInitials = {
@@ -19,13 +20,21 @@ Processor.prototype.process = function(result) {
 }
 
 Processor.prototype.inspect = function() {
-  if(this.result.length % 2 === 0) { return "Incomplete result." }
+  if(this.result.length % 2 === 0) { this.error("Incomplete result.") }
   if(!isNaN(this.result[0])) { return "Invalid constituency." }
   for(i=1;i<this.result.length-2;i+=2) {
     if(isNaN(this.result[i])) { return "Invalid count." }
     if(!Object.keys(this.partyInitials).includes(this.result[i+1])) { return "Invalid party." } 
   }
   return this.complete()
+}
+
+Processor.prototype.error = function(message) {
+  fs.writeFile('log.txt', message, function (err) {
+    if (err) return console.log(err);
+    console.log(message + ' >> log.txt');
+    return message
+  });
 }
 
 Processor.prototype.complete = function() {
