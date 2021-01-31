@@ -63,7 +63,7 @@ describe('processor', function() {
     })
 
     it("calculates the percentage of each party's total cast votes", function() {
-      expect(processor.result[0]).toEqual(30.757630763215953)
+      expect(processor.result[0]).toEqual('31%')
     })
 
   })

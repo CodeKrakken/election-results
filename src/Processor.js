@@ -31,7 +31,7 @@ Processor.prototype.inspect = function() {
 Processor.prototype.complete = function() {
   this.constituency = this.result.shift()
   this.decode(this.result)
-  this.result = this.calculatePercentages(this.result)
+  this.calculatePercentages(this.result)
   return this.presentResult()
 }
 
@@ -52,7 +52,8 @@ Processor.prototype.calculatePercentages = function(array) {
   decoder = this
   array.forEach(function(value, index) {
     if(Number.isInteger(value)) {
-      array[index] = Number(value / decoder.totalVotes * 100)
+      rawPercentage = Number(value / decoder.totalVotes * 100)
+      array[index] = Math.round(rawPercentage) + '%'
     }
   })
   return array
@@ -60,10 +61,10 @@ Processor.prototype.calculatePercentages = function(array) {
 
 Processor.prototype.presentResult = function() {
   return `${this.constituency}\n\n${this.result[1]} - ${
-    Math.round(this.result[0])}%\n${this.result[3]} - ${
-    Math.round(this.result[2])}%\n${this.result[5]} - ${
-    Math.round(this.result[4])}%\n${this.result[7]} - ${
-    Math.round(this.result[6])}%`
+    this.result[0]}\n${this.result[3]} - ${
+    this.result[2]}\n${this.result[5]} - ${
+    this.result[4]}\n${this.result[7]} - ${
+    this.result[6]}`
 }
 
 module.exports = Processor
