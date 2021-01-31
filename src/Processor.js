@@ -15,7 +15,7 @@ function Processor() {
 
 Processor.prototype.process = function(result) {
   this.processedResult = result.split(', ')
-  if(this.check(this.processedResult) === false) { return "Invalid result." }
+  if(this.check(this.processedResult) === false) { return this.response }
   this.constituency = this.processedResult.shift()
   this.decodedResult = this.decode(this.processedResult)
   this.percentageResult = this.calculatePercentages(this.decodedResult)
@@ -23,9 +23,23 @@ Processor.prototype.process = function(result) {
 }
 
 Processor.prototype.check = function(result) {
-  for(i=0;i<result.length-2;i+=2) {
-    if(!isNaN(result[i]) || isNaN(result[i+1]) || result.length % 2 === 0) {
+  if(result.length % 2 === 0) {
+    this.response = "Invalid result."
+    return false
+  }
+  if(!isNaN(result[0])) { 
+    this.response = "Invalid constituency."
+    return false
+  }
+  for(i=1;i<result.length-2;i+=2) {
+    if(isNaN(result[i])) {
+      this.response = "Invalid count."
       return false
+    } else if(!Object.keys(this.partyInitials).includes(result[i+1])) {
+      this.response = "Invalid party."
+      return false
+    } else {
+      return true
     }
   }
 }
