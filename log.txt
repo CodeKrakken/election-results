@@ -1,7 +1,5 @@
-Incomplete result.
-Invalid constituency.
-Invalid constituency.
-Incomplete result.
-Invalid party.
-Invalid party.
-Invalid count.
+Invalid party. - Cardiff West, 11014, 69, 17803, L, 4923, UKIP, 2069, LD
+Invalid party. - Cardiff West, 11014, MRLP, 17803, L, 4923, UKIP, 2069, LD
+Invalid count. - Cardiff West, twattery, C, 17803, L, racism, UKIP, 2069, LD
+Incomplete result. - Cardiff West, 11014, C, 17803, L, 4923, UKIP, 2069
+Invalid constituency. - 69, 11014, C, 17803, L, 4923, UKIP, 2069, LD

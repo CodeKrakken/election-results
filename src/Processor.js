@@ -30,7 +30,7 @@ Processor.prototype.inspect = function() {
 }
 
 Processor.prototype.error = function(message) {
-  fs.appendFile('log.txt', message + '\n', function (err) {
+  fs.appendFile('log.txt', `${message} - ${this.result.join(', ')}\n`, function (err) {
     if (err) return console.log(err);
     console.log(message + ' >> log.txt');
   });
