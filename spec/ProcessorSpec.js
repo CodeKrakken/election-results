@@ -32,6 +32,14 @@ describe('processor', function() {
     expect(processor.process('Cardiff West, 11014, 69, 17803, L, 4923, UKIP, 2069, LD')).toEqual('Invalid result.')
   })
 
+  it('can identify a word in place of a vote count', function() {
+    expect(processor.process('Cardiff West, twattery, C, 17803, L, racism, UKIP, 2069, LD')).toEqual('Invalid result.')
+  })
+
+  it('can identify a missing result', function() {
+    expect(processor.process('Cardiff West, 11014, C, 17803, L, 4923, UKIP, 2069')).toEqual('Invalid result.')
+  })
+
   describe('after decoding', function() {
     beforeEach(function() {
       processor.process('Cardiff West, 11014, C, 17803, L, 4923, UKIP, 2069, LD')

@@ -24,7 +24,7 @@ Processor.prototype.process = function(result) {
 
 Processor.prototype.check = function(result) {
   for(i=0;i<result.length-2;i+=2) {
-    if(!isNaN(result[i]) || isNaN(result[i+1])) {
+    if(!isNaN(result[i]) || isNaN(result[i+1]) || result.length % 2 === 0) {
       return false
     }
   }
