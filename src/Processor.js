@@ -25,9 +25,13 @@ Processor.prototype.inspect = function() {
     if(isNaN(this.result[i])) { return "Invalid count." }
     if(!Object.keys(this.partyInitials).includes(this.result[i+1])) { return "Invalid party." } 
   }
+  return this.complete()
+}
+
+Processor.prototype.complete = function() {
   this.constituency = this.result.shift()
-  this.decodedResult = this.decode(this.result)
-  this.percentageResult = this.calculatePercentages(this.decodedResult)
+  this.result = this.decode(this.result)
+  this.percentageResult = this.calculatePercentages(this.result)
   return this.presentResult()
 }
 
