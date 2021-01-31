@@ -21,16 +21,16 @@ Processor.prototype.process = function(result) {
 
 Processor.prototype.inspect = function() {
   if(this.result.length % 2 === 0) { return this.error("Incomplete result.") }
-  if(!isNaN(this.result[0])) { return "Invalid constituency." }
+  if(!isNaN(this.result[0])) { return this.error("Invalid constituency.") }
   for(i=1;i<this.result.length-2;i+=2) {
-    if(isNaN(this.result[i])) { return "Invalid count." }
-    if(!Object.keys(this.partyInitials).includes(this.result[i+1])) { return "Invalid party." } 
+    if(isNaN(this.result[i])) { return this.error("Invalid count.") }
+    if(!Object.keys(this.partyInitials).includes(this.result[i+1])) { return this.error("Invalid party.") } 
   }
   return this.complete()
 }
 
 Processor.prototype.error = function(message) {
-  fs.writeFile('log.txt', message, function (err) {
+  fs.appendFile('log.txt', message + '\n', function (err) {
     if (err) return console.log(err);
     console.log(message + ' >> log.txt');
   });

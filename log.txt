@@ -1,1 +1,7 @@
 Incomplete result.
+Invalid constituency.
+Invalid constituency.
+Incomplete result.
+Invalid party.
+Invalid party.
+Invalid count.
