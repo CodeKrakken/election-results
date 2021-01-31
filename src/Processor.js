@@ -31,7 +31,7 @@ Processor.prototype.inspect = function() {
 Processor.prototype.complete = function() {
   this.constituency = this.result.shift()
   this.decode(this.result)
-  this.percentageResult = this.calculatePercentages(this.result)
+  this.result = this.calculatePercentages(this.result)
   return this.presentResult()
 }
 
@@ -59,11 +59,11 @@ Processor.prototype.calculatePercentages = function(array) {
 }
 
 Processor.prototype.presentResult = function() {
-  return `${this.constituency}\n\n${this.percentageResult[1]} - ${
-    Math.round(this.percentageResult[0])}%\n${this.percentageResult[3]} - ${
-    Math.round(this.percentageResult[2])}%\n${this.percentageResult[5]} - ${
-    Math.round(this.percentageResult[4])}%\n${this.percentageResult[7]} - ${
-    Math.round(this.percentageResult[6])}%`
+  return `${this.constituency}\n\n${this.result[1]} - ${
+    Math.round(this.result[0])}%\n${this.result[3]} - ${
+    Math.round(this.result[2])}%\n${this.result[5]} - ${
+    Math.round(this.result[4])}%\n${this.result[7]} - ${
+    Math.round(this.result[6])}%`
 }
 
 module.exports = Processor
