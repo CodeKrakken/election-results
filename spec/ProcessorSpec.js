@@ -1,4 +1,5 @@
 'use strict';
+const fs = require('fs')
 
 describe('processor', function() {
   const Processor = require('../src/Processor.js')
@@ -39,6 +40,12 @@ describe('processor', function() {
 
   it('can identify a missing result', function() {
     expect(processor.process('Cardiff West, 11014, C, 17803, L, 4923, UKIP, 2069')).toEqual('Incomplete result')
+  })
+
+  it('logs an incorrect constituency in a log file', function() {
+    processor.process('69, 11014, C, 17803, L, 4923, UKIP, 2069, LD')
+    const log = fs.readFileSync('errors.txt', 'utf8')
+    expect(log).toContain('69, 11014, C, 17803, L, 4923, UKIP, 2069, LD - Invalid constituency - 69')
   })
 
   describe('after decoding', function() {

@@ -1,5 +1,5 @@
 const { ConsoleReporter } = require("jasmine")
-fs = require('fs')
+const fs = require('fs')
 
 function Processor() {
   this.partyInitials = {
