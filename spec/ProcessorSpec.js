@@ -48,6 +48,12 @@ describe('processor', function() {
     expect(log).toContain('69, 11014, C, 17803, L, 4923, UKIP, 2069, LD - Invalid constituency - 69')
   })
 
+  it('logs an invalid party in a log file', function() {
+    processor.process('Cardiff West, 11014, 69, 17803, L, 4923, UKIP, 2069, LD')
+    const log = fs.readFileSync('errors.txt', 'utf8')
+    expect(log).toContain('Cardiff West, 11014, MRLP, 17803, L, 4923, UKIP, 2069, LD - Invalid party - MRLP')
+  })
+
   describe('after decoding', function() {
     beforeEach(function() {
       processor.process('Cardiff West, 11014, C, 17803, L, 4923, UKIP, 2069, LD')
