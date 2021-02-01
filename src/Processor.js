@@ -20,19 +20,19 @@ Processor.prototype.process = function(result) {
 }
 
 Processor.prototype.inspect = function() {
-  if(this.result.length % 2 === 0) { return this.error("Incomplete result") }
-  if(!isNaN(this.result[0])) { return this.error(`Invalid constituency - ${this.result[0]}`) }
+  if(this.result.length % 2 === 0) { return this.log('errors.txt', "Incomplete result") }
+  if(!isNaN(this.result[0])) { return this.log('errors.txt', `Invalid constituency - ${this.result[0]}`) }
   for(i=1;i<this.result.length-2;i+=2) {
-    if(isNaN(this.result[i])) { return this.error(`Invalid count - ${this.result[i]}`, ) }
-    if(!Object.keys(this.partyInitials).includes(this.result[i+1])) { return this.error(`Invalid party - ${this.result[i+1]}`) } 
+    if(!Object.keys(this.partyInitials).includes(this.result[i+1])) { return this.log('errors.txt', `Invalid party - ${this.result[i+1]}`) } 
+    if(isNaN(this.result[i])) { return this.log('errors.txt', `Invalid count - ${this.result[i]}`, ) }
   }
   return this.complete()
 }
 
-Processor.prototype.error = function(message) {
-  fs.appendFile('log.txt', `${this.result.join(', ')} - ${message}\n`, function (err) {
+Processor.prototype.log = function(file, message) {
+  fs.appendFile(file, `${this.result.join(', ')} - ${message}\n\n`, function (err) {
     if (err) return console.log(err);
-    console.log(message + ' >> log.txt');
+    console.log(message + ' >> ' + 'errors.txt');
   });
   return message
 }
@@ -41,7 +41,7 @@ Processor.prototype.complete = function() {
   this.constituency = this.result.shift()
   this.decode(this.result)
   this.calculatePercentages(this.result)
-  return this.presentResult()
+  return this.log('valid results.txt', this.presentResult())
 }
 
 Processor.prototype.decode = function(array) {
