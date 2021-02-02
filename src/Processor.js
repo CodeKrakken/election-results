@@ -27,7 +27,7 @@ Processor.prototype.inspect = function() {
     resultInteger = parseFloat(this.result[i])
     if(!Number.isInteger(resultInteger) || resultInteger < 0) { return this.error(`Invalid count - ${this.result[i]}` )}
   }
-  return this.complete()
+  return this.override()
 }
 
 Processor.prototype.log = function(message) {
@@ -44,8 +44,24 @@ Processor.prototype.error = function(message) {
   return message
 }
 
-Processor.prototype.complete = function() {
+Processor.prototype.override = function() {
   this.constituency = this.result.shift()
+  let override = fs.readFileSync('override.txt', 'utf8')
+  if(override.includes(this.constituency)) {
+    parties = override.split(', ')
+    for(i=2;i<parties.length-2;i+=2) {
+      if(Object.keys(this.partyInitials).includes(parties[i])) {
+        console.log(parties[i])
+        this.result[this.result.findIndex(parties[i])-1] = parties[i-1]
+      } else {
+  
+      }
+    }
+  } 
+  return this.complete()
+}
+
+Processor.prototype.complete = function() {
   this.decode(this.result)
   this.calculatePercentages(this.result)
   return this.log(this.presentResult())

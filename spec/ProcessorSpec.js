@@ -37,7 +37,7 @@ describe('processor', function() {
     expect(processor.process('Cardiff West, 11014, C, 17803, L, racism, UKIP, 2069, LD')).toEqual('Invalid count - racism')
   })
 
-  it('can identify a negative number word count', function() {
+  it('can identify a negative vote count', function() {
     expect(processor.process('Cardiff West, -11014, C, 17803, L, 4923, UKIP, 2069, LD')).toEqual('Invalid count - -11014')
   })
 
@@ -71,6 +71,13 @@ describe('processor', function() {
     processor.process('Cardiff West, 11014, 69, 17803, L, 4923, UKIP, 2069, LD')
     const log = fs.readFileSync('errors.txt', 'utf8')
     expect(log).toContain('Cardiff West, 11014, MRLP, 17803, L, 4923, UKIP, 2069, LD - Invalid party - MRLP')
+  })
+
+  it('substitutes a result from the override file if applicable', function() {
+    fs.appendFile('override.txt', 'Cardiff West, 0, C, 17803, L, 4923, UKIP, 2069, LD', function (err) {
+      if (err) return console.log(err);
+    });
+    expect(processor.process('Cardiff West, 11014, C, 17803, L, 4923, UKIP, 2069, LD')).toEqual('Cardiff West\n\nConservative Party - 0%\nLabour Party - 50%\nUKIP - 14%\nLiberal Democrats - 6%')
   })
 
   describe('after decoding', function() {
