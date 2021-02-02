@@ -42,6 +42,12 @@ describe('processor', function() {
     expect(processor.process('Cardiff West, 11014, C, 17803, L, 4923, UKIP, 2069')).toEqual('Incomplete result')
   })
 
+  it('logs a missing result in an error log', function() {
+    processor.process('Cardiff West, 11014, C, 17803, L, 4923, UKIP, 2069')
+    const log = fs.readFileSync('errors.txt', 'utf8')
+    expect(log).toContain('Cardiff West, 11014, C, 17803, L, 4923, UKIP, 2069 - Incomplete result')
+  })
+
   it('logs an incorrect constituency in a log file', function() {
     processor.process('69, 11014, C, 17803, L, 4923, UKIP, 2069, LD')
     const log = fs.readFileSync('errors.txt', 'utf8')
