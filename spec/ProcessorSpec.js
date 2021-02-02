@@ -30,12 +30,15 @@ describe('processor', function() {
   })
 
   it('can identify an invalid party abbreviation', function() {
-    expect(processor.process('Cardiff West, 11014, 69, 17803, L, 4923, UKIP, 2069, LD')).toEqual('Invalid party - 69')
     expect(processor.process('Cardiff West, 11014, MRLP, 17803, L, 4923, UKIP, 2069, LD')).toEqual('Invalid party - MRLP')
   })
 
   it('can identify a word in place of a vote count', function() {
     expect(processor.process('Cardiff West, 11014, C, 17803, L, racism, UKIP, 2069, LD')).toEqual('Invalid count - racism')
+  })
+
+  it('can identify a negative number word count', function() {
+    expect(processor.process('Cardiff West, -11014, C, 17803, L, 4923, UKIP, 2069, LD')).toEqual('Invalid count - -11014')
   })
 
   it('can log an invalid count in an error log file', function() {
