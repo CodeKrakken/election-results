@@ -38,6 +38,12 @@ describe('processor', function() {
     expect(processor.process('Cardiff West, 11014, C, 17803, L, racism, UKIP, 2069, LD')).toEqual('Invalid count - racism')
   })
 
+  it('can log an invalid count in an error log file', function() {
+    processor.process('Cardiff West, 11014, C, 17803, L, racism, UKIP, 2069, LD')
+    const log = fs.readFileSync('errors.txt', 'utf8')
+    expect(log).toContain('Cardiff West, 11014, C, 17803, L, racism, UKIP, 2069, LD - Invalid count - racism')
+  })
+
   it('can identify a missing result', function() {
     expect(processor.process('Cardiff West, 11014, C, 17803, L, 4923, UKIP, 2069')).toEqual('Incomplete result')
   })
