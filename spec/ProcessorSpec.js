@@ -41,6 +41,10 @@ describe('processor', function() {
     expect(processor.process('Cardiff West, -11014, C, 17803, L, 4923, UKIP, 2069, LD')).toEqual('Invalid count - -11014')
   })
 
+  it('can identify a non integer count', function() {
+    expect(processor.process('Cardiff West, 3.14, C, 17803, L, 4923, UKIP, 2069, LD')).toEqual('Invalid count - 3.14')
+  })
+
   it('can log an invalid count in an error log file', function() {
     processor.process('Cardiff West, 11014, C, 17803, L, racism, UKIP, 2069, LD')
     const log = fs.readFileSync('errors.txt', 'utf8')

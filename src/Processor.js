@@ -23,8 +23,9 @@ Processor.prototype.inspect = function() {
   if(this.result.length % 2 === 0) { return this.error("Incomplete result") }
   if(!isNaN(this.result[0])) { return this.error(`Invalid constituency - ${this.result[0]}` )}
   for(i=1;i<this.result.length-2;i+=2) {
-    if(!Object.keys(this.partyInitials).includes(this.result[i+1])) { return this.error(`Invalid party - ${this.result[i+1]}`) } 
-    if(isNaN(this.result[i]) || this.result[i] < 0) { return this.error(`Invalid count - ${this.result[i]}` )}
+    if(!Object.keys(this.partyInitials).includes(this.result[i+1])) { return this.error(`Invalid party - ${this.result[i+1]}`) }
+    resultInteger = parseFloat(this.result[i])
+    if(!Number.isInteger(resultInteger) || resultInteger < 0) { return this.error(`Invalid count - ${this.result[i]}` )}
   }
   return this.complete()
 }
