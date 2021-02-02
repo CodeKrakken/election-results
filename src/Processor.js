@@ -49,12 +49,10 @@ Processor.prototype.override = function() {
   let override = fs.readFileSync('override.txt', 'utf8')
   if(override.includes(this.constituency)) {
     parties = override.split(', ')
-    for(i=2;i<parties.length-2;i+=2) {
+    for(i=2;i<=parties.length-1;i+=2) {
       if(Object.keys(this.partyInitials).includes(parties[i])) {
-        console.log(parties[i])
-        this.result[this.result.findIndex(parties[i])-1] = parties[i-1]
-      } else {
-  
+        // console.log(['a','b'].indexOf('b'))
+        this.result[this.result.indexOf(parties[i])-1] = parties[i-1]
       }
     }
   } 

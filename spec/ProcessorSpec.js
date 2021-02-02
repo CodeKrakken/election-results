@@ -74,10 +74,13 @@ describe('processor', function() {
   })
 
   it('substitutes a result from the override file if applicable', function() {
-    fs.appendFile('override.txt', 'Cardiff West, 0, C, 17803, L, 4923, UKIP, 2069, LD', function (err) {
+    fs.writeFile('override.txt', 'Cardiff West, 0, C, 17803, L, 4923, UKIP, 2069, LD', function (err) {
       if (err) return console.log(err);
     });
     expect(processor.process('Cardiff West, 11014, C, 17803, L, 4923, UKIP, 2069, LD')).toEqual('Cardiff West\n\nConservative Party - 0%\nLabour Party - 50%\nUKIP - 14%\nLiberal Democrats - 6%')
+    fs.writeFile('override.txt', '', function (err) {
+      if (err) return console.log(err);
+    })
   })
 
   describe('after decoding', function() {
