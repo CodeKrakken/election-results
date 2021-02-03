@@ -7,6 +7,9 @@ describe('processor', function() {
 
   beforeEach(function() {
     processor = new Processor()
+    fs.writeFileSync('override.txt', '', function (err) {
+      if (err) return console.log(err);
+    })
   })
 
   it('has a list of party codes', function() {
@@ -47,8 +50,8 @@ describe('processor', function() {
 
   it('can log an invalid count in an error log file', function() {
     processor.process('Cardiff West, 11014, C, 17803, L, racism, UKIP, 2069, LD')
-    const log = fs.readFileSync('errors.txt', 'utf8')
-    expect(log).toContain('Cardiff West, 11014, C, 17803, L, racism, UKIP, 2069, LD - Invalid count - racism')
+    const errors = fs.readFileSync('errors.txt', 'utf8')
+    expect(errors).toContain('Cardiff West, 11014, C, 17803, L, racism, UKIP, 2069, LD - Invalid count - racism')
   })
 
   it('can identify a missing result', function() {
@@ -57,30 +60,27 @@ describe('processor', function() {
 
   it('logs a missing result in an error log', function() {
     processor.process('Cardiff West, 11014, C, 17803, L, 4923, UKIP, 2069')
-    const log = fs.readFileSync('errors.txt', 'utf8')
-    expect(log).toContain('Cardiff West, 11014, C, 17803, L, 4923, UKIP, 2069 - Incomplete result')
+    const errors = fs.readFileSync('errors.txt', 'utf8')
+    expect(errors).toContain('Cardiff West, 11014, C, 17803, L, 4923, UKIP, 2069 - Incomplete result')
   })
 
   it('logs an incorrect constituency in a log file', function() {
     processor.process('69, 11014, C, 17803, L, 4923, UKIP, 2069, LD')
-    const log = fs.readFileSync('errors.txt', 'utf8')
-    expect(log).toContain('69, 11014, C, 17803, L, 4923, UKIP, 2069, LD - Invalid constituency - 69')
+    const errors = fs.readFileSync('errors.txt', 'utf8')
+    expect(errors).toContain('69, 11014, C, 17803, L, 4923, UKIP, 2069, LD - Invalid constituency - 69')
   })
 
   it('logs an invalid party in a log file', function() {
     processor.process('Cardiff West, 11014, 69, 17803, L, 4923, UKIP, 2069, LD')
-    const log = fs.readFileSync('errors.txt', 'utf8')
-    expect(log).toContain('Cardiff West, 11014, MRLP, 17803, L, 4923, UKIP, 2069, LD - Invalid party - MRLP')
+    const errors = fs.readFileSync('errors.txt', 'utf8')
+    expect(errors).toContain('Cardiff West, 11014, MRLP, 17803, L, 4923, UKIP, 2069, LD - Invalid party - MRLP')
   })
 
   it('substitutes a result from the override file if applicable', function() {
-    fs.writeFile('override.txt', 'Cardiff West, 0, C, 17803, L, 4923, UKIP, 2069, LD', function (err) {
+    fs.writeFileSync('override.txt', 'Cardiff West, 0, C, 17803, L, 4923, UKIP, 2069, LD', function (err) {
       if (err) return console.log(err);
     });
-    expect(processor.process('Cardiff West, 11014, C, 17803, L, 4923, UKIP, 2069, LD')).toEqual('Cardiff West\n\nConservative Party - 0%\nLabour Party - 50%\nUKIP - 14%\nLiberal Democrats - 6%')
-    fs.writeFile('override.txt', '', function (err) {
-      if (err) return console.log(err);
-    })
+    expect(processor.process('Cardiff West, 11014, C, 17803, L, 4923, UKIP, 2069, LD')).toEqual('Cardiff West\n\nConservative Party - 0%\nLabour Party - 72%\nUKIP - 20%\nLiberal Democrats - 8%')
   })
 
   describe('after decoding', function() {
